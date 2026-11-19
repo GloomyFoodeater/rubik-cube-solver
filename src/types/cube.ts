@@ -2,10 +2,12 @@ export type Color = 'W' | 'Y' | 'G' | 'B' | 'R' | 'O';
 export const FACES = ['U', 'D', 'F', 'B', 'R', 'L'] as const;
 export type Face = (typeof FACES)[number];
 export type MoveModifier = '' | "'" | '2';
-export type Move = `${Face}${MoveModifier}`;
+export type Turn = `${Face}${MoveModifier}`;
 export type RotationAxis = 'x' | 'y' | 'z';
 export type Rotation = `${RotationAxis}${MoveModifier}`;
-export type CubeAction = Move | Rotation;
+export type Move = Turn | Rotation;
+
+export type FaceStickers = readonly Color[];
 
 /**
  * Facelet model.
@@ -20,8 +22,7 @@ export type CubeAction = Move | Rotation;
  *
  * 6 | 7 | 8
  */
-
-export type CubeState = Readonly<Record<Face, readonly Color[]>>;
+export type CubeState = Readonly<Record<Face, FaceStickers>>;
 
 /**
  * Default Western (BOY) color scheme.
@@ -34,4 +35,4 @@ export const DEFAULT_COLOR_SCHEME = {
   B: 'B',
   R: 'R',
   L: 'O',
-};
+} satisfies Record<Face, Color>;

@@ -2,10 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { createSolvedCube } from '../cube';
 import { FACES, DEFAULT_COLOR_SCHEME } from '../../types/cube';
 
-describe('createSolvedCube', () => {
+describe(createSolvedCube, () => {
   it('has 6 faces and 9 tiles for each', () => {
-    // Arrange
-    // Act
+    // Arrange & Act
     const cube = createSolvedCube();
 
     // Assert
@@ -13,8 +12,7 @@ describe('createSolvedCube', () => {
     expect(Object.values(cube).every((fv) => fv.length === 9)).toBe(true);
   });
   it('satisfies BOY color scheme', () => {
-    // Arrange
-    // Act
+    // Arrange & Act
     const cube = createSolvedCube();
 
     // Assert
