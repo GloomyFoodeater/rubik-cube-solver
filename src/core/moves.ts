@@ -214,3 +214,7 @@ function isTurn(move: Move): move is Turn {
 export function applyMove(cube: CubeState, move: Move): CubeState {
   return isTurn(move) ? applyTurn(cube, move) : applyRotation(cube, move);
 }
+
+export function applyMoves(cube: CubeState, moves: readonly Move[]): CubeState {
+  return moves.reduce(applyMove, cube);
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FACES, type CubeState, type Move } from '../../types/cube';
-import { applyMove } from '../moves';
+import { applyMove, applyMoves } from '../moves';
 
 /**
  * Creates a synthetic cube where every sticker has a unique identifier ('U0'..'L8')
@@ -157,7 +157,6 @@ describe(applyMove, () => {
       expect(result).toEqual(cube);
     }
   });
-
   it('returns cube to initial state after 2 double turns (U2, R2)', () => {
     // Arrange
     const cube = createIndexedCube();
@@ -170,7 +169,6 @@ describe(applyMove, () => {
     expect(afterU2).toEqual(cube);
     expect(afterR2).toEqual(cube);
   });
-
   it("returns cube to initial state after move and its inverse (R R')", () => {
     // Arrange
     const cube = createIndexedCube();
@@ -181,7 +179,6 @@ describe(applyMove, () => {
     // Assert
     expect(result).toEqual(cube);
   });
-
   it("returns cube to initial state after 6 repetitions of sexy move (R U R' U')", () => {
     // Arrange
     const cube = createIndexedCube();
@@ -226,7 +223,6 @@ describe(applyMove, () => {
     // Assert
     expect(results).toEqual(Array(rotations.length).fill(cube));
   });
-
   it('maintains consistency identities between rotations and face turns', () => {
     // Arrange
     const cube = createIndexedCube();
@@ -251,5 +247,29 @@ describe(applyMove, () => {
     expect(afterXU).toEqual(afterFX);
     expect(afterYF).toEqual(afterRY);
     expect(afterZU).toEqual(afterLZ);
+  });
+});
+describe(applyMoves, () => {
+  it('returns cube unchanged when move list is empty', () => {
+    // Arrange
+    const cube = createIndexedCube();
+
+    // Act
+    const result = applyMoves(cube, []);
+
+    // Assert
+    expect(result).toEqual(cube);
+  });
+  it('sequentially applies multiple moves to the cube state', () => {
+    // Arrange
+    const cube = createIndexedCube();
+    const moves: Move[] = ['R', 'U', "R'", "U'"];
+    const expected = moves.reduce(applyMove, cube);
+
+    // Act
+    const result = applyMoves(cube, moves);
+
+    // Assert
+    expect(result).toEqual(expected);
   });
 });
