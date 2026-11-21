@@ -1,4 +1,5 @@
-export type Color = 'W' | 'Y' | 'G' | 'B' | 'R' | 'O';
+export const COLORS = ['W', 'Y', 'G', 'B', 'R', 'O'] as const;
+export type Color = (typeof COLORS)[number];
 export const FACES = ['U', 'D', 'F', 'B', 'R', 'L'] as const;
 export type Face = (typeof FACES)[number];
 export const MOVE_MODIFIERS = ['', "'", '2'] as const;
